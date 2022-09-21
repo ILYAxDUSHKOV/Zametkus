@@ -12,17 +12,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import com.example.zametkus.R
-import com.example.zametkus.presentation.composable.Screens
+import com.example.zametkus.presentation.composable.graphs.Graph
 import kotlinx.coroutines.delay
 
 @Composable
 fun AnimatedSplashScreen(
     navController: NavHostController
-){
-    var startAnimation by remember{
+) {
+    var startAnimation by remember {
         mutableStateOf(false)
     }
     val alphaAnim = animateFloatAsState(
@@ -33,24 +32,26 @@ fun AnimatedSplashScreen(
     )
     LaunchedEffect(
         key1 = true
-    ){
+    ) {
         startAnimation = true
         delay(2000)
-        navController.navigate(Screens.HomeScreen.route)
+        navController.navigate(Graph.APP)
     }
     SplashScreen(alpha = alphaAnim.value)
 }
 
 @Composable
-fun SplashScreen(alpha:Float){
+fun SplashScreen(alpha: Float) {
     Box(
         modifier = Modifier.fillMaxSize(),
         contentAlignment = Alignment.Center
-    ){
+    ) {
         Image(
             painter = painterResource(id = R.drawable.zamlogo),
             contentDescription = null,
-            modifier = Modifier.size(300.dp).alpha(alpha = alpha)
+            modifier = Modifier
+                .size(300.dp)
+                .alpha(alpha = alpha)
         )
     }
 }

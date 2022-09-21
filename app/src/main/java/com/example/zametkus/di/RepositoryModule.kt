@@ -15,5 +15,5 @@ abstract class RepositoryModule {
     @Singleton
     abstract fun bindZamRepository(
         repositoryImpl: RepositoryImpl
-    ):repository
+    ): repository
 }

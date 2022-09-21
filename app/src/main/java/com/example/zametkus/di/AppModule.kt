@@ -15,17 +15,17 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 class AppModule /*(val application: Application)*/ { //Здесь был object. Я поменял когда смотрел видео про рум и дагер на класс
 
-    val application:Application = Application()
+    val application: Application = Application()
 
     @Singleton
     @Provides
-    fun getZamDao(zamDatabase: ZamDatabase):ZamDao{
+    fun getZamDao(zamDatabase: ZamDatabase): ZamDao {
         return zamDatabase.dao()
     }
 
     @Singleton
     @Provides
-    fun getRoomDatabase(@ApplicationContext appContext:Context):ZamDatabase{
+    fun getRoomDatabase(@ApplicationContext appContext: Context): ZamDatabase {
         return ZamDatabase.getDatabase(appContext)
     }
 
