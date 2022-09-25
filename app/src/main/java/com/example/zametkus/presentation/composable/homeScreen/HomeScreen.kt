@@ -144,7 +144,7 @@ fun ExpandableCard(
                 Text(
                     modifier = Modifier
                         .padding(10.dp)
-                        .widthIn(min = 0.dp, max = 280.dp),
+                        .widthIn(min = 0.dp, max = 250.dp),
                     text = "${zametka.title}",
                     fontSize = 18.sp,
                     fontWeight = FontWeight.Bold
