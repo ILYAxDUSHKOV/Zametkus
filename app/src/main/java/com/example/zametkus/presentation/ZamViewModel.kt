@@ -85,6 +85,11 @@ class ZamViewModel @Inject constructor(
             repository.deleteHistory()
         }
     }
+    fun deleteHistory(history: HistoryData){
+        viewModelScope.launch {
+            repository.deleteHis(history)
+        }
+    }
 
     //Color Converter
     fun colorConverter(color: String): Color {

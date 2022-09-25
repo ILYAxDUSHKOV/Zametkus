@@ -21,5 +21,6 @@ interface repository {
     //HistoryDto
     fun getAllHistory(): LiveData<List<HistoryData>>
     suspend fun insertHistory(history:HistoryData)
-    suspend fun deleteHistory()
+    suspend fun deleteHistory() //Называть методы конкретнее. Это метод для удаления всех записей.
+    suspend fun deleteHis(history: HistoryData)
 }

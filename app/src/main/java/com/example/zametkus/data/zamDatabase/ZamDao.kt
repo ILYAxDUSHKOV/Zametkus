@@ -5,7 +5,7 @@ import androidx.room.*
 
 @Dao
 interface ZamDao {
-    // TODO Никитин запрос. Посмотреть потом.
+    // TODO Альтернативный запрос. Посмотреть потом.
     /*@Query("select z.* from zamdto z join groupdto g on g.id=z.gId where g.id=:id")
     fun getAllZamByGroup(id: Int):LiveData<List<ZamDto>>*/
 
@@ -36,6 +36,8 @@ interface ZamDao {
     suspend fun insertHistory(history:HistoryDto)
     @Query("delete from historydto")
     suspend fun deleteAllHistory()
+    @Delete
+    suspend fun deleteHistory(history: HistoryDto)
 }
 
 // Это для вставки изначальных данных в таблицу.

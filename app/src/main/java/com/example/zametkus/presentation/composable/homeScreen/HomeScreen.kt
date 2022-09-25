@@ -33,6 +33,7 @@ import com.example.zametkus.domain.zamData.ZamData
 import com.example.zametkus.presentation.ZamViewModel
 import com.example.zametkus.presentation.composable.BottomBarItem
 import com.example.zametkus.presentation.ui.theme.*
+import com.example.zametkus.presentation.utills.ZamButtonsState
 
 /*Доработать:
     1) В MyLazyRowForGroup и AddDialog происходят дублирующие запросы getAllGroup.
@@ -80,7 +81,8 @@ fun MyLazyColumn(
             items(zamList.size) { index ->
                 ExpandableCard(
                     zametka = zamList[index],
-                    viewModel = viewModel
+                    viewModel = viewModel,
+                    buttonsState = ZamButtonsState.HomeState
                 )
             }
             //Last Item
@@ -108,7 +110,8 @@ fun MyLazyColumn(
 @Composable
 fun ExpandableCard(
     zametka: ZamData,
-    viewModel: ZamViewModel
+    viewModel: ZamViewModel,
+    buttonsState:ZamButtonsState
 ) {
     //Expandable state
     var expandedState by remember {
@@ -134,22 +137,24 @@ fun ExpandableCard(
                 .fillMaxWidth()
                 .padding(10.dp)
         ) {
-            Box(modifier = Modifier.fillMaxWidth()){
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically
+            ){
                 Text(
                     modifier = Modifier
                         .padding(10.dp)
-                        .align(Alignment.CenterStart),
+                        .widthIn(min = 0.dp, max = 280.dp),
                     text = "${zametka.title}",
                     fontSize = 18.sp,
                     fontWeight = FontWeight.Bold
                 )
-                //TODO Ввести поле для даты, присвоить это поле для text
+                Spacer(modifier = Modifier.weight(1f,true))
                 Text(
                     text = zametka.date,
                     color = MyGray,
                     modifier = Modifier
-                        .padding(5.dp)
-                        .align(Alignment.CenterEnd),
+                        .padding(5.dp),
                     fontSize = 15.sp
                 )
             }
@@ -171,26 +176,42 @@ fun ExpandableCard(
                             .align(Alignment.CenterStart),
                         shape = CircleShape
                     ) {}
-                    Row(modifier = Modifier.align(Alignment.BottomEnd)) {
-                        IconButton(onClick = {
-                            viewModel.openEditDialog(zametka = zametka)
-                        }) {
-                            Icon(
-                                imageVector = Icons.Filled.Create,
-                                contentDescription = null
-                            )
+                    when(buttonsState){
+                        ZamButtonsState.HomeState ->
+                            Row(modifier = Modifier.align(Alignment.BottomEnd)) {
+                            IconButton(onClick = {
+                                viewModel.openEditDialog(zametka = zametka)
+                            }) {
+                                Icon(
+                                    imageVector = Icons.Filled.Create,
+                                    contentDescription = null
+                                )
+                            }
+                            IconButton(onClick = {
+                                viewModel.insertHistory(history = zametka.toHistoryData())
+                                viewModel.deleteZam(zametka = zametka)
+                            }) {
+                                Icon(
+                                    imageVector = Icons.Filled.Delete,
+                                    contentDescription = null
+                                )
+                            }
+                            }
+                        ZamButtonsState.HistoryState -> {
+                            Row(modifier = Modifier.align(Alignment.BottomEnd)) {
+                                IconButton(onClick = {
+                                    viewModel.insertZam(zametka)
+                                    viewModel.deleteHistory(zametka.toHistoryData())
+                                }) {
+                                    Icon(
+                                        imageVector = Icons.Filled.ArrowBack,
+                                        contentDescription = null
+                                    )
+                                }
+                            }
                         }
-                        IconButton(onClick = {
-                            viewModel.insertHistory(history = zametka.toHistoryData())
-                            viewModel.deleteZam(zametka = zametka)
-                        }) {
-                            Icon(
-                                imageVector = Icons.Filled.Delete,
-                                contentDescription = null
-                            )
-                        }
-
                     }
+
                 }
 
             }

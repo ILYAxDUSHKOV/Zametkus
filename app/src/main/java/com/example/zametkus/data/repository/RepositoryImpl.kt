@@ -69,4 +69,8 @@ class RepositoryImpl @Inject constructor(
     override suspend fun deleteHistory() {
         dao.deleteAllHistory()
     }
+
+    override suspend fun deleteHis(history: HistoryData) {
+        dao.deleteHistory(history = history.toHistoryDto())
+    }
 }
