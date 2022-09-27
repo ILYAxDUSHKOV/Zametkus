@@ -1,7 +1,8 @@
 package com.example.zametkus.presentation.composable
 
-import androidx.compose.animation.*
+import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.core.tween
+import androidx.compose.animation.slideInHorizontally
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.runtime.Composable
@@ -30,16 +31,6 @@ fun SetupNavGraph(
                 slideInHorizontally(
                     initialOffsetX = {-300},
                     animationSpec = tween(300)
-                ) + fadeIn(
-                  animationSpec = tween(300)
-                )
-            },
-            exitTransition = { _, target ->
-                slideOutHorizontally(
-                    targetOffsetX = {-300},
-                    animationSpec = tween(300)
-                ) + fadeOut(
-                    animationSpec = tween(300)
                 )
             },
             route = Screens.HomeScreen.route,
@@ -54,16 +45,6 @@ fun SetupNavGraph(
             enterTransition = { initial, _ ->
                 slideInHorizontally(
                     initialOffsetX = {300},
-                    animationSpec = tween(300)
-                ) + fadeIn(
-                    animationSpec = tween(300)
-                )
-            },
-            exitTransition = {_, target ->
-                slideOutHorizontally(
-                    targetOffsetX = {300},
-                    animationSpec = tween(300)
-                ) + fadeOut(
                     animationSpec = tween(300)
                 )
             },

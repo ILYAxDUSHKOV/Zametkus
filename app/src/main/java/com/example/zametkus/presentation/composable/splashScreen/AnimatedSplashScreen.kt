@@ -47,7 +47,7 @@ fun SplashScreen(alpha: Float) {
         contentAlignment = Alignment.Center
     ) {
         Image(
-            painter = painterResource(id = R.drawable.zamlogo),
+            painter = painterResource(id = R.drawable.logo_for_splash_screen),
             contentDescription = null,
             modifier = Modifier
                 .size(300.dp)
